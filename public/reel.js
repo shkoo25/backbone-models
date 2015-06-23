@@ -1,4 +1,4 @@
-/*
+/*  
   The Backbone Model definition for a reel on a slot machine.
 */
 var Reel = Backbone.Model.extend({
@@ -10,7 +10,8 @@ var Reel = Backbone.Model.extend({
       - the "blankRate" property to .5
   */
   defaults: {
-
+    symbols: ["Cherry", "Plum", "Lemon", "Orange", "Grape", "Melon"],
+    blankRate: .5
   },
 
   /*
@@ -23,14 +24,20 @@ var Reel = Backbone.Model.extend({
       - "stop": execute this.stopSpinning()
   */
   initialize: function(attributes) {
+    this.spinning = false,
+    this.result = ("")
 
+    this.on("spin", this.spin)
+    this.on("stop", this.stopSpinning)
   },
+
+
 
   /*
     Set the "spinning" property of this model to true.
   */
   spin: function() {
-
+    this.spinning = true
   },
 
   /*
@@ -41,7 +48,9 @@ var Reel = Backbone.Model.extend({
     Trigger the "stopped" event on this model.
   */
   stopSpinning: function() {
-
+    this.spinning = false,
+    this.result = this.getResult();
+    this.trigger("stopped")
   },
 
   /*
@@ -54,6 +63,12 @@ var Reel = Backbone.Model.extend({
   */
   getResult: function() {
 
+    if(Math.random() < this.get.blankRate) {
+      return ("")
+    } else {
+      return this.get("symbols")[Math.floor(Math.random() * 7)]
+    }
+
   },
 
   /*
@@ -62,7 +77,11 @@ var Reel = Backbone.Model.extend({
     Otherwise, return the "result" property of this model.
   */
   display: function() {
-
+    if(this.spinning === true){
+      return false
+    } else {
+      return this.result
+    }
   }
 
 })

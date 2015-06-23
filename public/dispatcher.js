@@ -1,5 +1,5 @@
 var EventDispatcher = _.clone(Backbone.Events)
-
+ 
 /*
   Creates a generic object literal. It should have several properties:
 
@@ -19,6 +19,10 @@ var dataObject = {
   It adds 1 to the dataObject.counter property
 --------- */
 
+addition: EventDispatcher.on("addition", function(){
+    dataObject.counter += 1
+  })
+
 /* TODO */
 
 
@@ -28,7 +32,13 @@ var dataObject = {
     If true, becomes false
     If false, becomes true
 --------- */
-
+flick: EventDispatcher.on("flick", function(){
+  if(dataObject.switch === true){
+    dataObject.switch = false
+  } else {
+    dataObject.switch = true
+  }
+})
 /* TODO */
 
 
@@ -36,6 +46,10 @@ var dataObject = {
   Write code that listens to the "siren" event on the EventDispatcher
   It executes the dataObject.amplify function
 --------- */
+
+siren: EventDispatcher.on("siren", function(){
+    dataObject.amplify()
+})
 
 /* TODO */
 
@@ -45,7 +59,9 @@ var dataObject = {
   It changes the dataObject.amplify property to the value passed in
     via the event's parameter
 --------- */
-
+changeAmplify: EventDispatcher.on("change-amplify", function(anything){
+    dataObject.amplify = anything
+  })
 /* TODO */
 
 
